@@ -1,24 +1,16 @@
-function getWeather() {
-    const city = document.getElementById('city').value;
-    const apiKey = "your_api_key_here";  // Replace with your OpenWeatherMap API key
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+const toggleButton = document.getElementById('toggleButton');
+const icon = document.getElementById('icon');
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data.cod === 200) {
-                const weatherInfo = data.weather[0];
-                const mainInfo = data.main;
+toggleButton.addEventListener('click', () => {
+  const isDarkMode = document.body.classList.toggle('dark-mode');
 
-                document.getElementById('city-name').textContent = `Weather in ${city}`;
-                document.getElementById('temperature').textContent = `Temperature: ${mainInfo.temp}°C`;
-                document.getElementById('description').textContent = `Condition: ${weatherInfo.description}`;
-                document.getElementById('humidity').textContent = `Humidity: ${mainInfo.humidity}%`;
-            } else {
-                alert("City not found!");
-            }
-        })
-        .catch(error => {
-            alert("Error fetching data. Please try again.");
-        });
-}
+  if (isDarkMode) {
+    document.documentElement.style.setProperty('--background-color', '#121212');
+    document.documentElement.style.setProperty('--text-color', '#ffffff');
+    icon.textContent = '🌙'; // Switch to moon icon
+  } else {
+    document.documentElement.style.setProperty('--background-color', '#ffffff');
+    document.documentElement.style.setProperty('--text-color', '#000000');
+    icon.textContent = '☀️'; // Switch to sun icon
+  }
+});
